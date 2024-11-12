@@ -8,7 +8,7 @@ def handle_error(error_type, message, context=""):
     logging.error(f"{context} - {error_type}: {message}")
     return 'Not Found'
 
-path = r'C:\Users\paras\OneDrive\Desktop\CEL\timetable.xlsx'
+path = r'C:\Users\paras\OneDrive\Desktop\SUTT\timetable.xlsx'
 
 def load(name, df, line):
     try:
@@ -80,75 +80,82 @@ for i in range(6):
             d = 0
             e = 0
             f = 0
+            g = 0
             for i in range(len(split_time)):
+                if i<= (len(split_time)-2):
+                    if split_time[i].isdigit() and split_time[i+1].isdigit():
+                        if int(split_time[i])+1 == int(split_time[i+1]):
+                            g = 1
+                            if int(split_time[i]) <= 2:
+                                split_time[i] = str(int(split_time[i])+7) + "AM  to " + str(int(split_time[i])+9) +"AM"
+                            elif int(split_time[i]) == 3:
+                                split_time[i] = "10 AM to 12 PM"
+                            elif int(split_time[i]) == 4:
+                                split_time[i] = "11 AM to 1 PM"
+                            elif int(split_time[i]) >= 5:
+                                split_time[i] = str(int(split_time[i])-5) + "PM  to " + str(int(split_time[i])-3) +"PM"
+                            self.time.append(split_time[i])
+                            d = 1
+                        else:
+                            pass
+                    else:
+                        pass
 
-                if split_time[i].isdigit() and e == 0 and f == 0:
-                    f =1
-                    if int(split_time[i]) <= 2:
-                        split_time[i] = str(int(split_time[i])+7) + "AM  to " + str(int(split_time[i])+9) +"AM"
-                    elif int(split_time[i]) == 3:
-                        split_time[i] = "10 AM to 12 PM"
-                    elif int(split_time[i]) == 4:
-                        split_time[i] = "11 AM to 1 PM"
-                    elif int(split_time[i]) >= 5:
-                        split_time[i] = str(int(split_time[i])-5) + "PM  to " + str(int(split_time[i])-3) +"PM"
-                    self.time.append(split_time[i])
-                    d = 1
+                if g==0:
+                    if d == 0 and not split_time[i].isdigit():
+                        if split_time[i] == "M":
+                            self.day.append("Monday")
+                        if split_time[i] == "T":
+                            self.day.append("Tuesday")
+                        if split_time[i] == "W":
+                            self.day.append("Wednesday")
+                        if split_time[i] == "Th":
+                            self.day.append("Thursday")
+                        if split_time[i] == "F":
+                            self.day.append("Friday")
+                        if split_time[i] == "S":
+                            self.day.append("Saturday")
+                    elif split_time[i].isdigit() and e == 0 and f == 0:
+                        if int(split_time[i]) <= 3:
+                            split_time[i] = str(int(split_time[i])+7) + "AM  to " + str(int(split_time[i])+8) +"AM"
+                        elif int(split_time[i]) == 4:
+                            split_time[i] = str(int(split_time[i])+7) + "AM  to " + str(int(split_time[i])+8) +"PM"
+                        elif int(split_time[i]) == 5:
+                            split_time[i] = str(int(split_time[i])+7) + "PM  to " + str(int(split_time[i])-4) +"PM"
+                        elif int(split_time[i]) >= 6:
+                            split_time[i] = str(int(split_time[i])-5) + "PM  to " + str(int(split_time[i])-4) +"PM"
+                        self.time.append(split_time[i])
+                        d = 1
+                        f = 1
 
+                    elif d == 1 and not split_time[i].isdigit():
+                        e = 1
+                        if split_time[i] == "M":
+                            self.day1.append("Monday")
+                        if split_time[i] == "T":
+                            self.day1.append("Tuesday")
+                        if split_time[i] == "W":
+                            self.day1.append("Wednesday")
+                        if split_time[i] == "Th":
+                            self.day1.append("Thursday")
+                        if split_time[i] == "F":
+                            self.day1.append("Friday")
+                        if split_time[i] == "S":
+                            self.day1.append("Saturday")
+                    elif split_time[i].isdigit() and e == 1:
+                        if int(split_time[i]) <= 3:
+                            split_time[i] = str(int(split_time[i])+7) + "AM  to " + str(int(split_time[i])+8) +"AM"
+                        elif int(split_time[i]) == 4:
+                            split_time[i] = str(int(split_time[i])+7) + "AM  to " + str(int(split_time[i])+8) +"PM"
+                        elif int(split_time[i]) == 5:
+                            split_time[i] = str(int(split_time[i])+7) + "PM  to " + str(int(split_time[i])-4) +"PM"
+                        elif int(split_time[i]) >= 6:
+                            split_time[i] = str(int(split_time[i])-5) + "PM  to " + str(int(split_time[i])-4) +"PM"
+                        self.time1.append(split_time[i])
 
-                elif d == 0 and not split_time[i].isdigit():
-                    if split_time[i] == "M":
-                        self.day.append("Monday")
-                    if split_time[i] == "T":
-                        self.day.append("Tuesday")
-                    if split_time[i] == "W":
-                        self.day.append("Wednesday")
-                    if split_time[i] == "Th":
-                        self.day.append("Thursday")
-                    if split_time[i] == "F":
-                        self.day.append("Friday")
-                    if split_time[i] == "S":
-                        self.day.append("Saturday")
-                elif split_time[i].isdigit() and e == 0 and f == 0:
-                    if int(split_time[i]) <= 3:
-                        split_time[i] = str(int(split_time[i])+7) + "AM  to " + str(int(split_time[i])+8) +"AM"
-                    elif int(split_time[i]) == 4:
-                        split_time[i] = str(int(split_time[i])+7) + "AM  to " + str(int(split_time[i])+8) +"PM"
-                    elif int(split_time[i]) == 5:
-                        split_time[i] = str(int(split_time[i])+7) + "PM  to " + str(int(split_time[i])-4) +"PM"
-                    elif int(split_time[i]) >= 6:
-                        split_time[i] = str(int(split_time[i])-5) + "PM  to " + str(int(split_time[i])-4) +"PM"
-                    self.time.append(split_time[i])
-                    d = 1
-
-                elif d == 1 and not split_time[i].isdigit():
-                    e = 1
-                    if split_time[i] == "M":
-                        self.day1.append("Monday")
-                    if split_time[i] == "T":
-                        self.day1.append("Tuesday")
-                    if split_time[i] == "W":
-                        self.day1.append("Wednesday")
-                    if split_time[i] == "Th":
-                        self.day1.append("Thursday")
-                    if split_time[i] == "F":
-                        self.day1.append("Friday")
-                    if split_time[i] == "S":
-                        self.day1.append("Saturday")
-                elif split_time[i].isdigit() and e == 1:
-                    if int(split_time[i]) <= 3:
-                        split_time[i] = str(int(split_time[i])+7) + "AM  to " + str(int(split_time[i])+8) +"AM"
-                    elif int(split_time[i]) == 4:
-                        split_time[i] = str(int(split_time[i])+7) + "AM  to " + str(int(split_time[i])+8) +"PM"
-                    elif int(split_time[i]) == 5:
-                        split_time[i] = str(int(split_time[i])+7) + "PM  to " + str(int(split_time[i])-4) +"PM"
-                    elif int(split_time[i]) >= 6:
-                        split_time[i] = str(int(split_time[i])-5) + "PM  to " + str(int(split_time[i])-4) +"PM"
-                    self.time1.append(split_time[i])
-
-            time_str = ', '.join(self.time)
-            time1_str = ', '.join(self.time1)
-            self.slot = {**{item1: time_str for item1 in self.day}, **{item2: time1_str for item2 in self.day1}}
+                time_str = ', '.join(self.time)
+                time1_str = ', '.join(self.time1)
+                self.slot = {**{item1: time_str for item1 in self.day}, **{item2: time1_str for item2 in self.day1}}
 
         def dict(self):
             return {
